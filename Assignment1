@@ -1,1 +1,172 @@
+//ProductList.class
 
+----------------------------------------------------------------------------------------------
+package Java;
+
+public class ProductList {
+    int Pid;
+     String Pname;
+     int Qty;
+     float price;
+
+    public ProductList(){
+
+    }
+    public ProductList(int pid, String pname, int qty, float price) {
+        this.Pid = pid;
+        this.Pname = pname;
+        this.Qty = qty;
+        this.price = price;
+    }
+
+    public int getPid() {
+        return Pid;
+    }
+
+    public void setPid(int pid) {
+        Pid = pid;
+    }
+
+    public String getPname() {
+        return Pname;
+    }
+
+    public void setPname(String pname) {
+        Pname = pname;
+    }
+
+    public int getQty() {
+        return Qty;
+    }
+
+    public void setQty(int qty) {
+        Qty = qty;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductList{" +
+                "Pid=" + Pid +
+                ", Pname='" + Pname + '\'' +
+                ", Qty=" + Qty +
+                ", price=" + price +
+                '}';
+    }
+}
+
+//List.class
+------------------------------------------------------------
+package Java;
+
+import java.util.*;
+
+public class List{
+    public static void main(String[] args) {
+        java.util.List<ProductList> pr= new ArrayList<>();
+        Scanner sc=new Scanner(System.in);
+        Scanner sc1=new Scanner(System.in);
+        int choice;
+        do{
+            System.out.println("1.AddProduct\n 2.DisplayProduct\n 3.SearchProduct\n 4.DeleteProduct\n 5.UpdateProduct\n");
+            System.out.println("Enter Your Choice:");
+            choice=sc.nextInt();
+            switch(choice){
+                case 1:
+                    System.out.print("Enter Pid:");
+                    int pid=sc.nextInt();
+                    System.out.print("Enter Pname:");
+                    String pname=sc1.nextLine();
+                    System.out.print("Enter Quantity:");
+                    int Qty=sc.nextInt();
+                    System.out.print("Enter Price:");
+                    float price=sc.nextFloat();
+
+                    pr.add(new ProductList(pid,pname,Qty,price));
+                    break;
+                case 2:
+                    System.out.println("----------");
+                    Iterator<ProductList> i=pr.iterator();
+                    while (i.hasNext()){
+                        ProductList p=i.next();
+                        System.out.println(p);
+                    }
+                    System.out.println("------------");
+                    break;
+                case 3:
+                    boolean found=false;
+                    System.out.println("Enter Product id to Search:");
+                    pid=sc.nextInt();
+                    System.out.println("----------");
+                    i=pr.iterator();
+                    while (i.hasNext()){
+                        ProductList p=i.next();
+                        if(p.getPid()==pid){
+                            System.out.println(p);
+                            found=true;
+                        }
+                    }
+                    if(!found){
+                        System.out.println("Product Not Found");
+                    }
+                    System.out.println("------------");
+                    break;
+                case 4:
+                    found=false;
+                    System.out.println("Enter Product id to Delete:");
+                    pid=sc.nextInt();
+                    System.out.println("----------");
+                    i=pr.iterator();
+                    while (i.hasNext()){
+                        ProductList p=i.next();
+                        if(p.getPid()==pid){
+                            i.remove();
+                            found=true;
+                        }
+                    }
+                    if(!found){
+                        System.out.println("Product Not Found");
+                    }else{
+                        System.out.println("Product is Deleted Successfully");
+                    }
+                    System.out.println("------------");
+                    break;
+                case 5:
+                    found=false;
+                    System.out.println("Enter Product id to Update:");
+                    pid=sc.nextInt();
+
+                    ListIterator<ProductList> pr1=pr.listIterator();
+                    while (pr1.hasNext()){
+                        ProductList p=pr1.next();
+                        if(p.getPid()==pid){
+                            System.out.print("Enter new Product Name:");
+                            pname=sc1.nextLine();
+
+                            System.out.print("Enter Quantity:");
+                            Qty=sc1.nextInt();
+
+                            System.out.print("Enter Price:");
+                            price=sc1.nextFloat();
+                            pr1.set(new ProductList(pid,pname,Qty,price));
+                            found=true;
+                        }
+                    }
+                    if(!found){
+                        System.out.println("Product Not Found");
+                    }else{
+                        System.out.println("Product is Updated Successfully");
+                    }
+                    break;
+            }
+        }while(choice!=0);
+    }
+
+}
